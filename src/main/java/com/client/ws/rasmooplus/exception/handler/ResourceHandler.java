@@ -18,7 +18,7 @@ public class ResourceHandler {
                 HttpStatus.NOT_FOUND,
                 HttpStatus.NOT_FOUND.value()
         );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDto);
     }
 
     @ExceptionHandler(BadRequestException.class)
