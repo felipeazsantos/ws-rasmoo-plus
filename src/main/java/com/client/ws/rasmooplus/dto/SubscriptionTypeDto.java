@@ -15,7 +15,7 @@ public class SubscriptionTypeDto {
     private String name;
 
     @Max(value = 12, message = "campo accessMonth não pode ser maior que 12")
-    private Long accessMonth;
+    private Long accessMonths;
 
     @NotNull(message = "campo price não pode ser nulo")
     private BigDecimal price;
@@ -26,10 +26,10 @@ public class SubscriptionTypeDto {
 
     public SubscriptionTypeDto() {}
 
-    public SubscriptionTypeDto(Long id, String name, Long accessMonth, BigDecimal price, String productKey) {
+    public SubscriptionTypeDto(Long id, String name, Long accessMonths, BigDecimal price, String productKey) {
         this.id = id;
         this.name = name;
-        this.accessMonth = accessMonth;
+        this.accessMonths = accessMonths;
         this.price = price;
         this.productKey = productKey;
     }
@@ -50,12 +50,12 @@ public class SubscriptionTypeDto {
         this.name = name;
     }
 
-    public Long getAccessMonth() {
-        return accessMonth;
+    public Long getAccessMonths() {
+        return accessMonths;
     }
 
-    public void setAccessMonth(Long accessMonth) {
-        this.accessMonth = accessMonth;
+    public void setAccessMonths(Long accessMonth) {
+        this.accessMonths = accessMonth;
     }
 
     public BigDecimal getPrice() {

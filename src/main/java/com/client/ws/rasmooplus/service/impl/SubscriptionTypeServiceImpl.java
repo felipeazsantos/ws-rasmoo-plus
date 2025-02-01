@@ -47,7 +47,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
         SubscriptionType subscriptionType = getSubscriptionType(id);
         subscriptionType.setName(dto.getName());
-        subscriptionType.setAccessMonth(dto.getAccessMonth());
+        subscriptionType.setAccessMonths(dto.getAccessMonths());
         subscriptionType.setPrice(dto.getPrice());
         return subscriptionTypeRepository.save(subscriptionType);
     }

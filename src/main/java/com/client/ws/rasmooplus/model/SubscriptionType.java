@@ -17,7 +17,7 @@ public class SubscriptionType implements Serializable {
     private String name;
 
     @Column(name = "access_months")
-    private Long accessMonth;
+    private Long accessMonths;
 
     private BigDecimal price;
 
@@ -27,7 +27,7 @@ public class SubscriptionType implements Serializable {
     public SubscriptionType(Long id, String name, Long accessMonth, BigDecimal price, String productKey) {
         this.id = id;
         this.name = name;
-        this.accessMonth = accessMonth;
+        this.accessMonths = accessMonths;
         this.price = price;
         this.productKey = productKey;
     }
@@ -51,12 +51,12 @@ public class SubscriptionType implements Serializable {
         this.name = name;
     }
 
-    public Long getAccessMonth() {
-        return accessMonth;
+    public Long getAccessMonths() {
+        return accessMonths;
     }
 
-    public void setAccessMonth(Long accessMonth) {
-        this.accessMonth = accessMonth;
+    public void setAccessMonths(Long accessMonths) {
+        this.accessMonths = accessMonths;
     }
 
     public BigDecimal getPrice() {

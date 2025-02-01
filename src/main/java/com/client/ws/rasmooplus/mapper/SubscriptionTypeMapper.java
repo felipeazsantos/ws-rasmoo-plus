@@ -9,7 +9,7 @@ public class SubscriptionTypeMapper {
         return new SubscriptionType(
                 dto.getId(),
                 dto.getName(),
-                dto.getAccessMonth(),
+                dto.getAccessMonths(),
                 dto.getPrice(),
                 dto.getProductKey());
     }
