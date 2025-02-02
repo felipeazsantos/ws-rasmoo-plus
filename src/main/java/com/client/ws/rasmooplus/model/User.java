@@ -26,7 +26,7 @@ public class User implements Serializable {
     private LocalDate dtSubscription = LocalDate.now();
 
     @Column(name = "dt_expiration")
-    private LocalDate dtExpiration;
+    private LocalDate dtExpiration = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_type_id")
@@ -37,6 +37,18 @@ public class User implements Serializable {
     private SubscriptionType subscriptionType;
 
     public User() {}
+
+    public User(Long id, String name, String email, String phone, String cpf, LocalDate dtSubscription, LocalDate dtExpiration, UserType userType, SubscriptionType subscriptionType) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.cpf = cpf;
+        this.dtSubscription = dtSubscription;
+        this.dtExpiration = dtExpiration;
+        this.userType = userType;
+        this.subscriptionType = subscriptionType;
+    }
 
     public Long getId() {
         return id;
