@@ -18,29 +18,30 @@ import java.util.Base64;
 public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
 
     @Value("${webservices.raspay.host}")
-    private static String raspayHost;
+    private String raspayHost;
 
     @Value("${webservices.raspay.customer}")
-    private static String raspayCustomer;
+    private String raspayCustomer;
 
     @Value("${webservices.raspay.order}")
-    private static String raspayOrder;
+    private String raspayOrder;
 
     @Value("${webservices.raspay.payment}")
-    private static String raspayPayment;
+    private String raspayPayment;
 
     @Value("${webservices.raspay.username}")
-    private static String raspayUsername;
+    private String raspayUsername;
 
     @Value("${webservices.raspay.password}")
-    private static String raspayPassword;
+    private String raspayPassword;
 
-    private static final HttpHeaders headers = getHttpHeaders();
+    private final HttpHeaders headers;
 
     private final RestTemplate restTemplate;
 
     public WsRaspayIntegrationImpl() {
         this.restTemplate = new RestTemplate();
+        this.headers =  getHttpHeaders();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
         }
     }
 
-    private static HttpHeaders getHttpHeaders() {
+    private HttpHeaders getHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
         String credentials = raspayUsername + ":" + raspayPassword;
         String base64Credentials = Base64.getEncoder().encodeToString(credentials.getBytes());
