@@ -9,11 +9,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name ="user_crendetials")
+@Table(name ="user_credentials")
 public class UserCredentials implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_credentials_id")
     private Long id;
 
     private String username;
