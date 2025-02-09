@@ -1,6 +1,7 @@
 package com.client.ws.rasmooplus.configuration;
 
 import com.client.ws.rasmooplus.filter.AuthenticationFilter;
+import com.client.ws.rasmooplus.repository.UserDetailsRepository;
 import com.client.ws.rasmooplus.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,9 @@ public class WebSecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
     private TokenService tokenService;
 
     @Bean
@@ -47,7 +51,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
-                .addFilterBefore(new AuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthenticationFilter(tokenService, userDetailsRepository), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

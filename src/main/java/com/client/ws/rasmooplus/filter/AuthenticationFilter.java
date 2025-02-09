@@ -1,11 +1,17 @@
 package com.client.ws.rasmooplus.filter;
 
+import com.client.ws.rasmooplus.exception.NotFoundException;
+import com.client.ws.rasmooplus.model.UserCredentials;
+import com.client.ws.rasmooplus.repository.UserDetailsRepository;
 import com.client.ws.rasmooplus.service.TokenService;
 import com.client.ws.rasmooplus.service.impl.TokenServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -15,8 +21,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
-    public AuthenticationFilter(TokenService tokenService) {
+    private final UserDetailsRepository userDetailsRepository;
+
+    public AuthenticationFilter(TokenService tokenService, UserDetailsRepository userDetailsRepository) {
         this.tokenService = tokenService;
+        this.userDetailsRepository = userDetailsRepository;
     }
 
     @Override
@@ -29,7 +38,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void authByToken(String token) {
+        Long userId = tokenService.getUserId(token);
+        UserCredentials userCredentials = userDetailsRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
+        UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(
+                userCredentials, null, userCredentials.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(userAuth);
     }
 
     private String getBearerToken(HttpServletRequest request) {
