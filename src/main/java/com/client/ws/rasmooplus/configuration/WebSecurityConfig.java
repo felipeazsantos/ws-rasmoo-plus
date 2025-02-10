@@ -1,7 +1,7 @@
 package com.client.ws.rasmooplus.configuration;
 
 import com.client.ws.rasmooplus.filter.AuthenticationFilter;
-import com.client.ws.rasmooplus.repository.UserDetailsRepository;
+import com.client.ws.rasmooplus.repository.mysql.UserDetailsRepository;
 import com.client.ws.rasmooplus.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

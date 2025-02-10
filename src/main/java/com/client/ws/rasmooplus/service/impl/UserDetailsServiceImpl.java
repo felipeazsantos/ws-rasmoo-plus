@@ -1,7 +1,7 @@
 package com.client.ws.rasmooplus.service.impl;
 
 import com.client.ws.rasmooplus.exception.NotFoundException;
-import com.client.ws.rasmooplus.repository.UserDetailsRepository;
+import com.client.ws.rasmooplus.repository.mysql.UserDetailsRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

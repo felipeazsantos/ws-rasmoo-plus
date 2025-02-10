@@ -1,16 +1,14 @@
 package com.client.ws.rasmooplus.filter;
 
 import com.client.ws.rasmooplus.exception.NotFoundException;
-import com.client.ws.rasmooplus.model.UserCredentials;
-import com.client.ws.rasmooplus.repository.UserDetailsRepository;
+import com.client.ws.rasmooplus.model.mysql.UserCredentials;
+import com.client.ws.rasmooplus.repository.mysql.UserDetailsRepository;
 import com.client.ws.rasmooplus.service.TokenService;
-import com.client.ws.rasmooplus.service.impl.TokenServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 

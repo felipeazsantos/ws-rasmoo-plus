@@ -5,9 +5,11 @@ import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.exception.BadRequestException;
 import com.client.ws.rasmooplus.exception.NotFoundException;
 import com.client.ws.rasmooplus.mapper.SubscriptionTypeMapper;
-import com.client.ws.rasmooplus.model.SubscriptionType;
-import com.client.ws.rasmooplus.repository.SubscriptionTypeRepository;
+import com.client.ws.rasmooplus.model.mysql.SubscriptionType;
+import com.client.ws.rasmooplus.repository.mysql.SubscriptionTypeRepository;
 import com.client.ws.rasmooplus.service.SubscriptionTypeService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +29,13 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         this.subscriptionTypeRepository = subscriptionTypeRepository;
     }
 
-
+    @Cacheable(value = "subscriptionType")
     @Override
     public List<SubscriptionType> findAll() {
         return subscriptionTypeRepository.findAll();
     }
 
+    @Cacheable(value = "subscriptionType", key = "#id")
     @Override
     public SubscriptionType findById(Long id) {
         return getSubscriptionType(id).add(WebMvcLinkBuilder.linkTo(
@@ -47,6 +50,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         );
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public SubscriptionType create(SubscriptionTypeDto dto) {
         if (Objects.nonNull(dto.getId())) {
@@ -57,6 +61,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionTypeRepository.save(subscriptionType);
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
         SubscriptionType subscriptionType = getSubscriptionType(id);
@@ -66,6 +71,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionTypeRepository.save(subscriptionType);
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public void delete(Long id) {
         getSubscriptionType(id);

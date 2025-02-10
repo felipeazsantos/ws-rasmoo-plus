@@ -1,6 +1,6 @@
 package com.client.ws.rasmooplus.controller;
 
-import com.client.ws.rasmooplus.model.UserType;
+import com.client.ws.rasmooplus.model.mysql.UserType;
 import com.client.ws.rasmooplus.service.UserTypeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

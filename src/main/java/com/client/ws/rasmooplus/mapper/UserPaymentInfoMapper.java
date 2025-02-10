@@ -1,8 +1,8 @@
 package com.client.ws.rasmooplus.mapper;
 
 import com.client.ws.rasmooplus.dto.UserPaymentInfoDto;
-import com.client.ws.rasmooplus.model.User;
-import com.client.ws.rasmooplus.model.UserPaymentInfo;
+import com.client.ws.rasmooplus.model.mysql.User;
+import com.client.ws.rasmooplus.model.mysql.UserPaymentInfo;
 
 public class UserPaymentInfoMapper {
 

@@ -1,6 +1,6 @@
-package com.client.ws.rasmooplus.repository;
+package com.client.ws.rasmooplus.repository.mysql;
 
-import com.client.ws.rasmooplus.model.UserCredentials;
+import com.client.ws.rasmooplus.model.mysql.UserCredentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

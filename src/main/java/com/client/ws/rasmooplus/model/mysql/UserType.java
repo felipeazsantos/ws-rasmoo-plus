@@ -1,9 +1,7 @@
-package com.client.ws.rasmooplus.model;
+package com.client.ws.rasmooplus.model.mysql;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "user_type")
