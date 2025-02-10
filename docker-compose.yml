@@ -24,8 +24,15 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data_container:/data/db
-
+  redis:
+    image: redis:4
+    container_name: redis-rasplus
+    ports:
+      - "6378:6379"
+    volumes:
+      - redis_data_container:/data/redis
 volumes:
   mysql_data_container:
   mongo_data_container:
+  redis_data_container:
     
