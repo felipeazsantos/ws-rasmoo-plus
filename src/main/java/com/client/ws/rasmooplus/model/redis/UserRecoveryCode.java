@@ -2,22 +2,27 @@ package com.client.ws.rasmooplus.model.redis;
 
 import jakarta.persistence.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.time.LocalDateTime;
 
 @RedisHash("recoveryCode")
-public class RecoveryCode {
+public class UserRecoveryCode {
 
     @Id
     private String id;
+
+    @Indexed
     private String email;
+
     private String code;
+
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    public RecoveryCode() {
+    public UserRecoveryCode() {
     }
 
-    public RecoveryCode(String id, String email, String code, LocalDateTime creationDate) {
+    public UserRecoveryCode(String id, String email, String code, LocalDateTime creationDate) {
         this.id = id;
         this.email = email;
         this.code = code;

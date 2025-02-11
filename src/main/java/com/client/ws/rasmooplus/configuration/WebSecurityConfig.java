@@ -42,7 +42,8 @@ public class WebSecurityConfig {
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth",
                                 "/user",
-                                "/payment/process")
+                                "/payment/process",
+                                "/auth/recovery-code/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()

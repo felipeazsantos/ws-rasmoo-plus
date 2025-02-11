@@ -1,17 +1,18 @@
 package com.client.ws.rasmooplus.service;
 
+import com.client.ws.rasmooplus.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class UserServiceTest {
+public class UserDetailsServiceTest {
 
     @Autowired
-    private UserService userService;
+    private UserCredentialsService userCredentialsService;
 
     @Test
     void sendRecoveryCode() {
-        userService.sendRecoveryCode("email@teste.com");
+        userCredentialsService.sendRecoveryCode("email@teste.com");
     }
 }
