@@ -2,6 +2,7 @@ package com.client.ws.rasmooplus.service.impl;
 
 import com.client.ws.rasmooplus.dto.PaymentProcessDto;
 import com.client.ws.rasmooplus.dto.wsraspay.CreditCardDto;
+import com.client.ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client.ws.rasmooplus.dto.wsraspay.OrderDto;
 import com.client.ws.rasmooplus.dto.wsraspay.PaymentDto;
 import com.client.ws.rasmooplus.enums.UserTypeEnum;
@@ -16,22 +17,17 @@ import com.client.ws.rasmooplus.mapper.wsraspay.PaymentMapper;
 import com.client.ws.rasmooplus.model.mysql.*;
 import com.client.ws.rasmooplus.repository.mysql.*;
 import com.client.ws.rasmooplus.service.PaymentInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.client.ws.rasmooplus.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import com.client.ws.rasmooplus.dto.wsraspay.CustomerDto;
 
 @Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     @Value("${webservices.rasplus.default.password}")
     private String defaultPassword;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
     private final UserPaymentInfoRepository userPaymentInfoRepository;
@@ -97,7 +93,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         UserType userType = userTypeRepository.findById(UserTypeEnum.ALUNO.getId())
                 .orElseThrow(() -> new NotFoundException("userType não encontrado: " + UserTypeEnum.ALUNO.name()));
 
-        UserCredentials userCredentials = new UserCredentials(null, user.getEmail(), passwordEncoder.encode(defaultPassword), userType);
+        UserCredentials userCredentials = new UserCredentials(null, user.getEmail(), PasswordUtils.encode(defaultPassword), userType);
         userDetailsRepository.save(userCredentials);
     }
 

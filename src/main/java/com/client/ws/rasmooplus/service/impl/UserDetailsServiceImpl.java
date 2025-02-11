@@ -1,11 +1,13 @@
 package com.client.ws.rasmooplus.service.impl;
 
+import com.client.ws.rasmooplus.dto.UserDetailsDto;
 import com.client.ws.rasmooplus.exception.NotFoundException;
 import com.client.ws.rasmooplus.model.mysql.UserCredentials;
 import com.client.ws.rasmooplus.model.redis.UserRecoveryCode;
 import com.client.ws.rasmooplus.repository.mysql.UserDetailsRepository;
 import com.client.ws.rasmooplus.repository.redis.UserRecoveryCodeRepository;
 import com.client.ws.rasmooplus.service.UserCredentialsService;
+import com.client.ws.rasmooplus.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,5 +65,16 @@ public class UserDetailsServiceImpl implements UserCredentialsService {
         return recoveryCode.equals(userRecoveryCode.getCode()) &&
                 email.equals(userRecoveryCode.getEmail()) &&
                 LocalDateTime.now().isBefore(timeout);
+    }
+
+    @Override
+    public void updatePasswordByRecoveryCode(UserDetailsDto userDetailsDto) {
+        if (recoveryCodeIsValid(userDetailsDto.getRecoveryCode(), userDetailsDto.getEmail())) {
+            UserCredentials userCredentials = userDetailsRepository.findByUsername(userDetailsDto.getEmail())
+                    .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+
+            userCredentials.setPassword(PasswordUtils.encode(userDetailsDto.getPassword()));
+            userDetailsRepository.save(userCredentials);
+        }
     }
 }
