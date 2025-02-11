@@ -8,10 +8,7 @@ import com.client.ws.rasmooplus.service.UserCredentialsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,5 +29,12 @@ public class AuthenticationController {
     public ResponseEntity<Void> sendRecoveryCode(@RequestBody @Valid UserRecoveryCodeDto dto) {
         userCredentialsService.sendRecoveryCode(dto.getEmail());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/recovery-code")
+    public ResponseEntity<Boolean> recoveryCodeIsValid(@RequestParam("recoveryCode") String recoveryCode,
+                                                       @RequestParam("email") String email) {
+     Boolean isValid = userCredentialsService.recoveryCodeIsValid(recoveryCode, email);
+     return ResponseEntity.ok(isValid);
     }
 }

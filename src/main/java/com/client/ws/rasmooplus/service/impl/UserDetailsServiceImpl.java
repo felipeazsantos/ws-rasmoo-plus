@@ -6,8 +6,9 @@ import com.client.ws.rasmooplus.model.redis.UserRecoveryCode;
 import com.client.ws.rasmooplus.repository.mysql.UserDetailsRepository;
 import com.client.ws.rasmooplus.repository.redis.UserRecoveryCodeRepository;
 import com.client.ws.rasmooplus.service.UserCredentialsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,14 @@ import java.util.Random;
 @Service
 public class UserDetailsServiceImpl implements UserCredentialsService {
 
-    private final UserDetailsRepository userDetailsRepository;
-    private final UserRecoveryCodeRepository userRecoveryCodeRepository;
+    @Value("${webservices.rasplus.redis.recoverycode.timeout}")
+    private Long recoveryCodeTimeout;
 
-    public UserDetailsServiceImpl(UserDetailsRepository userDetailsRepository, UserRecoveryCodeRepository userRecoveryCodeRepository) {
-        this.userDetailsRepository = userDetailsRepository;
-        this.userRecoveryCodeRepository = userRecoveryCodeRepository;
-    }
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
+    private UserRecoveryCodeRepository userRecoveryCodeRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,6 +58,10 @@ public class UserDetailsServiceImpl implements UserCredentialsService {
         UserRecoveryCode userRecoveryCode = userRecoveryCodeRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
-        return recoveryCode.equals(userRecoveryCode.getCode()) && email.equals(userRecoveryCode.getEmail());
+        LocalDateTime timeout = userRecoveryCode.getCreationDate().plusMinutes(recoveryCodeTimeout);
+
+        return recoveryCode.equals(userRecoveryCode.getCode()) &&
+                email.equals(userRecoveryCode.getEmail()) &&
+                LocalDateTime.now().isBefore(timeout);
     }
 }

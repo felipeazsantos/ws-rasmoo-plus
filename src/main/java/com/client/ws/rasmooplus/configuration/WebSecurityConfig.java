@@ -38,15 +38,12 @@ public class WebSecurityConfig {
                 authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/subscription-type/**",
                                 "/v3/api-docs/**",
-                                "/swagger-ui.html")
-                        .permitAll()
+                                "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth",
                                 "/user",
-                                "/payment/process",
-                                "/auth/recovery-code/**")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                                "/payment/process").permitAll()
+                        .requestMatchers("/auth/recovery-code/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
