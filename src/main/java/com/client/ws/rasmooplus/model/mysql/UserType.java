@@ -17,6 +17,12 @@ public class UserType implements GrantedAuthority {
 
     public UserType() {}
 
+    public UserType(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,5 +50,14 @@ public class UserType implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "UserType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
