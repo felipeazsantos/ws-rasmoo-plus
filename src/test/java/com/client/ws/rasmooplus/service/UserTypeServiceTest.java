@@ -24,7 +24,7 @@ public class UserTypeServiceTest {
     private UserTypeServiceImpl userTypeService;
 
     @Test
-    void findAll() {
+    void given_findAll_when_thereAreDataInDataBase_then_returnAllData() {
         List<UserType> userTypeList = new ArrayList<>();
         UserType userType1 = new UserType(1L, "Professor", "Professor da plataforma");
         UserType userType2 = new UserType(2L, "Aluno", "Aluno da plataforma");
