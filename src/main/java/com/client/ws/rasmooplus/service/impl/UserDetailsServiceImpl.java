@@ -21,7 +21,7 @@ import java.util.Random;
 public class UserDetailsServiceImpl implements UserCredentialsService {
 
     @Value("${webservices.rasplus.redis.recoverycode.timeout}")
-    private Long recoveryCodeTimeout;
+    private String recoveryCodeTimeout;
 
     @Autowired
     private UserDetailsRepository userDetailsRepository;
@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserCredentialsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        return userDetailsRepository.findByUsername(username)
-               .orElseThrow(() -> new NotFoundException("Usuario não encontrado: " + username));
+               .orElseThrow(() -> new NotFoundException("Usuário não encontrado: " + username));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UserDetailsServiceImpl implements UserCredentialsService {
         UserRecoveryCode userRecoveryCode = userRecoveryCodeRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
-        LocalDateTime timeout = userRecoveryCode.getCreationDate().plusMinutes(recoveryCodeTimeout);
+        LocalDateTime timeout = userRecoveryCode.getCreationDate().plusMinutes(Long.parseLong(recoveryCodeTimeout));
 
         return recoveryCode.equals(userRecoveryCode.getCode()) &&
                 email.equals(userRecoveryCode.getEmail()) &&
