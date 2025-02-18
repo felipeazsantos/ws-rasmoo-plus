@@ -3,6 +3,7 @@ package com.client.ws.rasmooplus.integration.impl;
 import com.client.ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client.ws.rasmooplus.dto.wsraspay.OrderDto;
 import com.client.ws.rasmooplus.dto.wsraspay.PaymentDto;
+import com.client.ws.rasmooplus.exception.HttpClientException;
 import com.client.ws.rasmooplus.integration.WsRaspayIntegration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -52,7 +53,7 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
                     restTemplate.exchange(raspayHost + raspayCustomer, HttpMethod.POST, request, CustomerDto.class);
             return response.getBody();
         } catch (Exception ex) {
-            throw ex;
+            throw new HttpClientException(ex.getLocalizedMessage());
         }
     }
 
