@@ -3,7 +3,6 @@ package com.client.ws.rasmooplus.integration;
 import com.client.ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client.ws.rasmooplus.exception.HttpClientException;
 import com.client.ws.rasmooplus.integration.impl.WsRaspayIntegrationImpl;
-import org.apache.coyote.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
