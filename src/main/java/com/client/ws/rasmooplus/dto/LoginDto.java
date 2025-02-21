@@ -2,6 +2,8 @@ package com.client.ws.rasmooplus.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Objects;
+
 public class LoginDto {
 
     @NotBlank(message = "atributo obrigatório")
@@ -24,5 +26,18 @@ public class LoginDto {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoginDto loginDto = (LoginDto) o;
+        return Objects.equals(username, loginDto.username) && Objects.equals(password, loginDto.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password);
     }
 }

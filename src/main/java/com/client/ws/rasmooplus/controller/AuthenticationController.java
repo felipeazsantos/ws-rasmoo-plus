@@ -8,6 +8,7 @@ import com.client.ws.rasmooplus.service.AuthenticationService;
 import com.client.ws.rasmooplus.service.UserCredentialsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,25 +22,25 @@ public class AuthenticationController {
     @Autowired
     private UserCredentialsService userCredentialsService;
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TokenDto> auth(@RequestBody @Valid LoginDto dto) {
         return ResponseEntity.ok(authenticationService.auth(dto));
     }
 
-    @PostMapping("/recovery-code/send")
+    @PostMapping(value = "/recovery-code/send", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendRecoveryCode(@RequestBody @Valid UserRecoveryCodeDto dto) {
         userCredentialsService.sendRecoveryCode(dto.getEmail());
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/recovery-code")
+    @GetMapping(value = "/recovery-code", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> recoveryCodeIsValid(@RequestParam("recoveryCode") String recoveryCode,
                                                        @RequestParam("email") String email) {
      Boolean isValid = userCredentialsService.recoveryCodeIsValid(recoveryCode, email);
      return ResponseEntity.ok(isValid);
     }
 
-    @PatchMapping("/recovery-code/password")
+    @PatchMapping(value = "/recovery-code/password", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updatePassword(@RequestBody @Valid UserDetailsDto dto) {
         userCredentialsService.updatePasswordByRecoveryCode(dto);
         return ResponseEntity.noContent().build();
