@@ -113,7 +113,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void given_updatePassword_when_UserDetailsDtoIsInvalid() throws Exception {
+    void given_updatePasswordByRecoveryCode_when_UserDetailsDtoIsInvalid() throws Exception {
         UserDetailsDto dto = new UserDetailsDto("felipe", "", "");
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/auth/recovery-code/password")
@@ -122,5 +122,16 @@ class AuthenticationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         verify(userCredentialsService, times(0)).updatePasswordByRecoveryCode(dto);
+    }
+
+    @Test
+    void given_recoveryCodeIsValid_then_returnOk() throws Exception {
+        when(userCredentialsService.recoveryCodeIsValid("0458", "felipe@gmail.com")).thenReturn(true);
+        mockMvc.perform(MockMvcRequestBuilders.get("/auth/recovery-code")
+                        .param("recoveryCode", "0458")
+                        .param("email", "felipe@gmail.com"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(userCredentialsService, times(1)).recoveryCodeIsValid("0458", "felipe@gmail.com");
     }
 }

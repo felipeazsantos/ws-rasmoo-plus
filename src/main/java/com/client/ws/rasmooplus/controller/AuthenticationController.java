@@ -33,7 +33,7 @@ public class AuthenticationController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/recovery-code", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/recovery-code")
     public ResponseEntity<Boolean> recoveryCodeIsValid(@RequestParam("recoveryCode") String recoveryCode,
                                                        @RequestParam("email") String email) {
      Boolean isValid = userCredentialsService.recoveryCodeIsValid(recoveryCode, email);
@@ -41,7 +41,7 @@ public class AuthenticationController {
     }
 
     @PatchMapping(value = "/recovery-code/password", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updatePassword(@RequestBody @Valid UserDetailsDto dto) {
+    public ResponseEntity<Void> updatePasswordByRecoveryCode(@RequestBody @Valid UserDetailsDto dto) {
         userCredentialsService.updatePasswordByRecoveryCode(dto);
         return ResponseEntity.noContent().build();
     }
