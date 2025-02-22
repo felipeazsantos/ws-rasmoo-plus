@@ -6,22 +6,22 @@ import com.client.ws.rasmooplus.exception.NotFoundException;
 import com.client.ws.rasmooplus.mapper.UserMapper;
 import com.client.ws.rasmooplus.model.mysql.User;
 import com.client.ws.rasmooplus.model.mysql.UserType;
-import com.client.ws.rasmooplus.model.redis.UserRecoveryCode;
 import com.client.ws.rasmooplus.repository.mysql.UserRepository;
 import com.client.ws.rasmooplus.repository.mysql.UserTypeRepository;
-import com.client.ws.rasmooplus.repository.redis.UserRecoveryCodeRepository;
 import com.client.ws.rasmooplus.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String PNG = ".png";
+    private static final String JPEG = ".jpeg";
+
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
-
 
     public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository) {
         this.userRepository = userRepository;
@@ -43,6 +43,28 @@ public class UserServiceImpl implements UserService {
         User user = UserMapper.fromDtoToEntity(dto, userType, null);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User uploadPhoto(Long id, MultipartFile file) throws IOException {
+        String imgName = file.getOriginalFilename();
+        String formatPNG = imgName.substring(imgName.length() - 4);
+        String formatJPEG = imgName.substring(imgName.length() - 5);
+
+        if (!(PNG.equalsIgnoreCase(formatPNG) || JPEG.equalsIgnoreCase(formatJPEG))) {
+            throw new BadRequestException("Imagem deve possuir formato PNG ou JPEG");
+        }
+
+        User user = findById(id);
+        user.setPhotoName(file.getOriginalFilename());
+        user.setPhoto(file.getBytes());
+
+        return user;
+    }
+
+    private User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("usuário não encontrado"));
     }
 
 

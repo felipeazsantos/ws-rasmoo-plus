@@ -3,6 +3,7 @@ package com.client.ws.rasmooplus.model.mysql;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.time.LocalDate;
 
 @Entity
@@ -35,6 +36,19 @@ public class User implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscriptions_type_id")
     private SubscriptionType subscriptionType;
+
+    @Column(name = "photo_name")
+    private String photoName;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    private byte[] photo;
 
     public User() {}
 
@@ -120,5 +134,13 @@ public class User implements Serializable {
 
     public void setSubscriptionType(SubscriptionType subscriptionType) {
         this.subscriptionType = subscriptionType;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 }

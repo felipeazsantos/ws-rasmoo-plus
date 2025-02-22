@@ -1,6 +1,5 @@
 package com.client.ws.rasmooplus.repository.mysql;
 
-import com.client.ws.rasmooplus.model.mysql.SubscriptionType;
 import com.client.ws.rasmooplus.model.mysql.UserCredentials;
 import com.client.ws.rasmooplus.model.mysql.UserType;
 import org.junit.jupiter.api.AfterAll;
@@ -14,11 +13,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebMvcTest(UserDetailsRepository.class)
 @AutoConfigureDataJpa
