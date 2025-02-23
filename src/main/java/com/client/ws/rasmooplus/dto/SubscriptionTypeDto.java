@@ -11,7 +11,6 @@ import java.util.Objects;
 public class SubscriptionTypeDto {
     private Long id;
 
-    @NotBlank(message = "campo name não pode ser nulo ou vazio")
     @Size(min = 5, max = 30, message = "campo name deve ter tamanho entre 5 e 30")
     private String name;
 
@@ -21,7 +20,6 @@ public class SubscriptionTypeDto {
     @NotNull(message = "campo price não pode ser nulo")
     private BigDecimal price;
 
-    @NotBlank(message = "campo productKey não pode ser nulo ou vazio")
     @Size(min = 5, max = 15, message = "campo productKey deve ter tamanho entre 5 e 15")
     private String productKey;
 

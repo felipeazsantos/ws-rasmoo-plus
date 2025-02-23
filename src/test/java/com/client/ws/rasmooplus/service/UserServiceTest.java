@@ -110,6 +110,29 @@ public class UserServiceTest {
         verify(userRepository, times(0)).findById(any());
     }
 
+    @Test
+    void given_downloadPhoto_when_thereIsUserPhoto_then_returnByteArray() {
+        UserType userType = getUserType();
+        User user = getUser(userType);
+        user.setPhoto(new byte[0]);
+
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
+        assertNotNull(userService.downloadPhoto(2L));
+
+        verify(userRepository, times(1)).findById(2L);
+    }
+
+    @Test
+    void given_downloadPhoto_when_thereIsNoUserPhoto_then_throwBadRequestException()  {
+        UserType userType = getUserType();
+        User user = getUser(userType);
+
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
+        assertThrows(BadRequestException.class, () -> userService.downloadPhoto(2L));
+
+        verify(userRepository, times(1)).findById(2L);
+    }
+
     private static UserType getUserType() {
         return new UserType(1L, "Aluno", "Aluno da plataforma");
     }
